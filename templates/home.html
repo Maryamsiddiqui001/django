@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load cms_tags menu_tags sekizai_tags %}
+{% load i18n %} 
+{% load static %}
+{% get_current_language as LANGUAGE_CODE %}
+
+      {% block content %}
+      
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Jumbotron -->
+          <div
+            class="bg-image p-5 text-right shadow-1-strong mb-5 text-white"
+            style="
+                  {% if LANGUAGE_CODE == 'ar' %}
+                  background-image: url('{% static "oudwithrad/img/radwan-2.jpg"%}'); 
+                  {% else %}
+                  background-image: url('{% static "oudwithrad/img/radwan-2-ltr.jpg"%}'); 
+                  {% endif %}
+                  height: calc(100vh - 40px);
+                  min-height: calc(100vh - 40px); 
+                  background-repeat: no-repeat; 
+                  background-size: cover;">
+            <h1 class="mb-3 h2">{% translate "Learn Oud Online with Rad" %}</h1>
+
+            <p>
+              {% translate "Anytime, Anywhere, Skype or in-person" %}
+            </p>
+          </div>
+          <!-- Jumbotron -->
+        </div>
+      </div>
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            {% placeholder "content" %}
+          </div>
+        </div>
+      </div>
+      
+      <div id="comp" class="dlog">
+      
+      </div>
+      
+      {% endblock content %}
+      
+      {% block js %}
+        <script src="{% static 'oudwithrad/js/abc2svg-1.js' %}"></script>
+        <script src="{% static 'oudwithrad/js/xmlplay_emb.js' %}"></script>
+      {% endblock js %}

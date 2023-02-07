@@ -1,0 +1,60 @@
+{% extends 'agency_base.html' %}
+{% load cms_tags menu_tags sekizai_tags %}
+{% load i18n %} 
+{% load static %}
+{% get_current_language as LANGUAGE_CODE %}
+      
+      
+      
+      {% block content %}
+      <div class="container">
+        <div class="row">
+          <div class="col-12 p-3">
+          
+          {% if LANGUAGE_CODE == 'ar' %}
+          <h1>أهلا بكم في صفحة دروس العود</h1>
+          <p>يتوفر حاليا التصنيفات التالية من الدروس:</p>
+          <ul>
+            {% for catagory in catagories %}
+              
+              <li>{{catagory.name_ar}}</li>
+              
+              <ul>
+              {% for course in catagory.course_set.all %}
+              <li><a href="{% url 'courses:course' course.id %}">{{course}}</a></li>
+              {% endfor %}
+              </ul>
+              
+            {% endfor %}
+          </ul>
+          
+          {% else %}
+          
+          <h1>Welcome to the Oud Lessons</h1>
+          <p>The following catagories are available:</p>
+          <ul>
+            {% for catagory in catagories %}
+              
+              <li>{{catagory.name_en}}</li>
+              
+              <ul>
+              {% for course in catagory.course_set.all %}
+              <li><a href="{% url 'courses:course' course.id %}">{{course}}</a></li>
+              {% endfor %}
+              </ul>
+              
+            {% endfor %}
+          </ul>
+          
+          {% endif%}
+            
+            
+            {% placeholder "content" %}
+          </div>
+        </div>
+      </div>
+      {% endblock content %}
+ 
+
+
+

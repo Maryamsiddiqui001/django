@@ -1,0 +1,24 @@
+{% load cms_tags %}
+{% load abc_extras %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<div dir=ltr>
+  {% spaceless %}
+
+
+<div class="abc">
+
+<hr>
+{{ instance.abc_score_text }}
+<hr>
+</div>
+
+  
+  {% if LANGUAGE_CODE == "ar" %}
+  <p class="figure-caption" align=center>{{instance.name_ar}}</p>
+  {% else %}
+  <p class="figure-caption" align=center>{{instance.name}}</p>
+  {% endif %}
+
+{% endspaceless %}
+</div>

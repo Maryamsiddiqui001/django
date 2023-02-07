@@ -1,0 +1,394 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <nafezqanadilo@gmail.com>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-22 02:44+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Nafez Qanadilo <nafezqanadilo@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: books/cms_apps.py:7
+#, fuzzy
+#| msgid "Courses Apphook"
+msgid "Books Apphook"
+msgstr "رابط تطبيق الدورات"
+
+#: books/models.py:64
+msgid "Book Cover"
+msgstr ""
+
+#: courses/cms_apps.py:7
+msgid "Courses Apphook"
+msgstr "رابط تطبيق الدورات"
+
+#: courses/models.py:8 courses/models.py:23 courses/models.py:41
+msgid "Name en"
+msgstr "الاسم بالإنجليزية"
+
+#: courses/models.py:9 courses/models.py:24 courses/models.py:42
+msgid "Name ar"
+msgstr "الاسم بالعربية"
+
+#: courses/models.py:12 courses/models.py:22
+msgid "Catagory"
+msgstr "التصنيف"
+
+#: courses/models.py:13
+msgid "Catagories"
+msgstr "التصنيفات"
+
+#: courses/models.py:27 courses/models.py:40
+msgid "Course"
+msgstr "الدورة"
+
+#: courses/models.py:28
+msgid "Courses"
+msgstr "الدورات"
+
+#: courses/models.py:43
+msgid "Video Link"
+msgstr ""
+
+#: courses/models.py:46
+msgid "Lesson"
+msgstr "الدرس"
+
+#: courses/models.py:47
+msgid "Lessons"
+msgstr "الدروس"
+
+#: courses/models.py:58
+msgid "Question Text en"
+msgstr "نص السؤال بالانجليزية"
+
+#: courses/models.py:59
+msgid "Question Text ar"
+msgstr "نص السؤال بالعربية"
+
+#: courses/models.py:62 courses/models.py:74
+msgid "Question"
+msgstr "السؤال"
+
+#: courses/models.py:63
+msgid "Questions"
+msgstr "الأسئلة"
+
+#: courses/models.py:72
+msgid "Answer Text en"
+msgstr "نص الجواب بالانجليزية"
+
+#: courses/models.py:73
+msgid "Answer Text ar"
+msgstr "نص الجواب بالعربية"
+
+#: courses/models.py:75
+msgid "Is Correct?"
+msgstr "إجابة صحيحة"
+
+#: courses/models.py:78
+msgid "Answer"
+msgstr "جواب"
+
+#: courses/models.py:79
+msgid "Answers"
+msgstr "الأجوبة"
+
+#: gallery/cms_apps.py:7
+msgid "Gallery Apphook"
+msgstr ""
+
+#: gallery/models.py:9
+msgid "First Name en"
+msgstr "الاسم الأول بالإنجليزية"
+
+#: gallery/models.py:10
+msgid "First Name ar"
+msgstr "الاسم الأول بالعربية"
+
+#: gallery/models.py:11 gallery/models.py:12
+msgid "Middle Name en"
+msgstr "اسم الأب بالإنجليزية"
+
+#: gallery/models.py:13
+msgid "Last Name en"
+msgstr "الكنية بالإنجليزية"
+
+#: gallery/models.py:14
+msgid "Last Name ar"
+msgstr "الكنية بالعربية"
+
+#: gallery/models.py:15
+msgid "Birth Place en"
+msgstr "مكان الولادة بالإنجليزية"
+
+#: gallery/models.py:16
+msgid "Birth Place ar"
+msgstr "مكان الولادة بالعربية"
+
+#: gallery/models.py:17
+msgid "Birth Year"
+msgstr "سنة الميلاد"
+
+#: gallery/models.py:18
+msgid "Birth Month"
+msgstr "شهر الميلاد"
+
+#: gallery/models.py:19
+msgid "Birth Day"
+msgstr "يوم الميلاد"
+
+#: gallery/models.py:20
+msgid "Death Year"
+msgstr "سنة الوفاة"
+
+#: gallery/models.py:21
+msgid "Death Month"
+msgstr "شهر الوفاة"
+
+#: gallery/models.py:22
+msgid "Death Day"
+msgstr "يوم الوفاة"
+
+#: gallery/models.py:26
+msgid "Maker"
+msgstr "الصانع"
+
+#: gallery/models.py:27
+msgid "Makers"
+msgstr "الصناع"
+
+#: gallery/models.py:36
+msgid "Year"
+msgstr "سنة الصنع"
+
+#: gallery/models.py:37 gallery/models.py:38
+msgid "Place of Manufacture"
+msgstr "مكان الصناعة"
+
+#: gallery/models.py:39
+msgid "Serial"
+msgstr "الرقم المتسلسل"
+
+#: gallery/models.py:40 gallery/models.py:41
+msgid "Rosetta Shape"
+msgstr "شكل الفتحة"
+
+#: gallery/models.py:49
+msgid "Bowel Wood en"
+msgstr "خشب القصعة بالإنلجيزية"
+
+#: gallery/models.py:50
+msgid "Bowel Wood ar"
+msgstr "خشب القصعة بالعربية"
+
+#: gallery/models.py:52
+msgid "Soundboard Wood en"
+msgstr "خشب الوجه بالإنجليزية"
+
+#: gallery/models.py:53
+msgid "Soundboard Wood ar"
+msgstr "خشب الوجه بالعربية"
+
+#: gallery/models.py:54
+msgid "Pegs Wood en"
+msgstr "خشب الملاوي بالإنجليزية"
+
+#: gallery/models.py:55
+msgid "Pegs Wood ar"
+msgstr "خشب الملاوي بالعربية"
+
+#: gallery/models.py:59 gallery/models.py:75
+msgid "Oud"
+msgstr "عود"
+
+#: gallery/models.py:60
+msgid "Ouds"
+msgstr "أعواد"
+
+#: gallery/models.py:77 gallery/models.py:92
+msgid "Oud Image"
+msgstr "صورة عود"
+
+#: gallery/models.py:83
+msgid "Image Description en"
+msgstr "وصف الصورة بالإنجليزية"
+
+#: gallery/models.py:84
+msgid "Image Description ar"
+msgstr "وصف الصورة بالعربية"
+
+#: gallery/models.py:85
+msgid "Image Source en"
+msgstr "مصدر الصورة بالإنجليزية"
+
+#: gallery/models.py:86
+msgid "Image Source ar"
+msgstr "مصدر الصورة الصورة بالعربية"
+
+#: gallery/models.py:87
+msgid "Is Featured?"
+msgstr "صورة مميزة"
+
+#: gallery/models.py:88
+msgid "Main Image"
+msgstr "صورة العود الأساسية"
+
+#: gallery/models.py:93
+msgid "Oud Images"
+msgstr "صور العود"
+
+#: manuscripts/cms_apps.py:7
+#, fuzzy
+#| msgid "Courses Apphook"
+msgid "Manuscripts Apphook"
+msgstr "رابط تطبيق الدورات"
+
+#: manuscripts/models.py:25
+#, fuzzy
+#| msgid "Birth Day"
+msgid "Birth City AR"
+msgstr "يوم الميلاد"
+
+#: manuscripts/models.py:26
+#, fuzzy
+#| msgid "Birth Day"
+msgid "Birth Locality AR"
+msgstr "يوم الميلاد"
+
+#: manuscripts/models.py:27
+#, fuzzy
+#| msgid "Birth Month"
+msgid "Birth Country AR"
+msgstr "شهر الميلاد"
+
+#: manuscripts/models.py:29
+#, fuzzy
+#| msgid "Birth Day"
+msgid "Birth City EN"
+msgstr "يوم الميلاد"
+
+#: manuscripts/models.py:30
+#, fuzzy
+#| msgid "Birth Day"
+msgid "Birth Locality EN"
+msgstr "يوم الميلاد"
+
+#: manuscripts/models.py:31
+#, fuzzy
+#| msgid "Birth Month"
+msgid "Birth Country EN"
+msgstr "شهر الميلاد"
+
+#: manuscripts/models.py:33
+#, fuzzy
+#| msgid "Birth Year"
+msgid "Birth Year CE"
+msgstr "سنة الميلاد"
+
+#: manuscripts/models.py:34
+#, fuzzy
+#| msgid "Birth Month"
+msgid "Birth Month CE"
+msgstr "شهر الميلاد"
+
+#: manuscripts/models.py:35
+#, fuzzy
+#| msgid "Birth Day"
+msgid "Birth Day CE"
+msgstr "يوم الميلاد"
+
+#: manuscripts/models.py:37
+#, fuzzy
+#| msgid "Birth Year"
+msgid "Birth Year AH"
+msgstr "سنة الميلاد"
+
+#: manuscripts/models.py:38
+#, fuzzy
+#| msgid "Birth Month"
+msgid "Birth Month AH"
+msgstr "شهر الميلاد"
+
+#: manuscripts/models.py:39
+#, fuzzy
+#| msgid "Birth Day"
+msgid "Birth Day AH"
+msgstr "يوم الميلاد"
+
+#: manuscripts/models.py:41
+#, fuzzy
+#| msgid "Death Year"
+msgid "Death Year CE"
+msgstr "سنة الوفاة"
+
+#: manuscripts/models.py:42
+#, fuzzy
+#| msgid "Death Month"
+msgid "Death Month CE"
+msgstr "شهر الوفاة"
+
+#: manuscripts/models.py:43
+#, fuzzy
+#| msgid "Death Day"
+msgid "Death Day CE"
+msgstr "يوم الوفاة"
+
+#: manuscripts/models.py:45
+#, fuzzy
+#| msgid "Death Year"
+msgid "Death Year AH"
+msgstr "سنة الوفاة"
+
+#: manuscripts/models.py:46 manuscripts/models.py:47
+#, fuzzy
+#| msgid "Death Month"
+msgid "Death Month AH"
+msgstr "شهر الوفاة"
+
+#: manuscripts/models.py:50
+msgid "Author"
+msgstr ""
+
+#: manuscripts/models.py:51
+msgid "Authors"
+msgstr ""
+
+#: oudwithrad/settings.py:198
+msgid "Featured Version"
+msgstr "النسخة المروجة"
+
+#: oudwithrad/settings.py:204
+msgid "Background image"
+msgstr "صورة خلفية"
+
+#: polls_cms_integration/cms_plugins.py:10
+msgid "Polls"
+msgstr "استبيانات"
+
+#: polls_cms_integration/cms_plugins.py:11
+msgid "Poll Plugin"
+msgstr "محتوى استبيان"
+
+#: templates/djangocms_video/feature/video_player.html:18
+msgid "Your browser doesn't support this video format."
+msgstr "متصفحك لا يدعم نوع الفيديو المعروض"
+
+#: templates/home.html:24
+msgid "Learn Oud Online with Rad"
+msgstr "تعلم العود مع رضوان"
+
+#: templates/home.html:27
+msgid "Anytime, Anywhere, Skype or in-person"
+msgstr "في أي وقت وأي مكان باستخدام الشبكة أو بمقابلات خاصة"

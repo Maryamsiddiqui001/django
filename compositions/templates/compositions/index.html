@@ -1,0 +1,185 @@
+{% extends "compositions/compositions_base.html" %}
+{% load arabic_numbers %}
+
+{% block title %}Compositions | Home{% endblock title %}
+
+{% block content %}
+<!--Arabic-->
+
+
+{% if LANGUAGE_CODE == 'ar' %}
+<div class="container" dir=rtl>
+  <div class="row">
+    <div class="col-12">
+      <h1>مرحبا بكم في قاعدة بيانات مقطوعات العود</h1>
+      
+      <hr>
+      
+      <p>
+  يوجد {{composers_count|enToArNumb}} مؤلف في قاعدة البيانات.
+      </p>
+      
+      <p>
+  المؤلفون مرتبون هجائيا بحسب اسم العائلة.
+      </p>
+      
+      {% for composer in composers %}
+      <div class="card text-bg-dark text-center mb-3" style="max-width: 18rem;">
+      
+      {% for image in composer.composerimage_set.all %}
+        {% if image.profile_image == True%}
+        <a href='#composer_{{composer.id}}'>
+          <img src="{{ image.composer_image.url}}" class="card-img-top" alt="...">
+        </a>
+        {% else %}
+        
+        {%endif%}
+      {% endfor %}
+      
+        <div class="card-body">
+          <h5 class="card-title">
+            {{composer.composer_first_name_ar }} 
+            {% if composer.arabic_definite_article %}ال{%endif%}{{ composer.composer_last_name_ar }}
+          </h5>
+          <p class="card-text">
+            {{ composer.composer_birth_country_ar }}
+            {% if composer.composer_death_year %}
+              ({{ composer.composer_birth_year|enToArNumb }} - {{ composer.composer_death_year|enToArNumb }})
+            {% else %}
+              ({{ composer.composer_birth_year|enToArNumb }} - )
+            {% endif %}
+          </p>
+        </div>
+        
+        <div class="card-footer bg-transparent">
+          {% if  composer.composition_set.count == 1 %}
+      (مقطوعة واحدة)
+          {% elif composer.composition_set.count == 2 %}
+      (مقطوعتين)
+          {% elif composer.composition_set.count == 0 %}
+      (لا يوجد مقطوعات)
+          {% else %}
+          ({{ composer.composition_set.count|enToArNumb }} مقطوعات).
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+      
+      
+      
+  
+      {% for composer in composers|dictsort:"composer_last_name_ar" %}
+      <h2 class="composer_name" id='composer_{{ composer.id }}'>{{ composer.composer_first_name_ar }} 
+        {% if composer.arabic_definite_article %}ال{%endif%}{{ composer.composer_last_name_ar }}
+      </h2>
+    
+      <ul>
+      {% for composition in composer.composition_set.all %}
+        <li>{{ composition.title_ar }}{% if composition.year %} ({{ composition.year }}){% endif %}.</li>
+        <ul>
+          {% for score in composition.score_set.all %}
+          <li>
+            <a href="score/{{ score.id }}/">
+        تدوينة موسيقية مصدرها: 
+            </a>
+            {{ score.notation_source_ar }}
+          </li>
+          {% endfor %}
+        </ul>
+      {% endfor %}
+      </ul>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+  
+  
+<!--English-->
+{% else %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1>Music Scores of Compositions for Oud</h1>
+      <hr>
+      <p>We currently have {{composers_count}} composers in the Database.</p>
+      <P>The composers are arranged alpabetacally according to their family names.</p>
+      
+      {% for composer in composers %}
+      <div class="card text-bg-dark text-center mb-3" style="max-width: 18rem;">
+      
+      {% for image in composer.composerimage_set.all %}
+        {% if image.profile_image == True%}
+        <a href='#composer_{{composer.id}}'>
+          <img src="{{ image.composer_image.url}}" class="card-img-top" alt="...">
+        </a>
+        {% else %}
+        
+        {%endif%}
+      {% endfor %}
+      
+        <div class="card-body">
+          <h5 class="card-title">
+            {{composer.composer_first_name_en }} 
+            {% if composer.arabic_definite_article %}Al-{%endif%}{{ composer.composer_last_name_en }}
+          </h5>
+          <p class="card-text">
+            {{ composer.composer_birth_country_en }}
+            {% if composer.composer_death_year %}
+              ({{ composer.composer_birth_year }} - {{ composer.composer_death_year }})
+            {% else %}
+              ({{ composer.composer_birth_year }} - )
+            {% endif %}
+          </p>
+        </div>
+        
+        <div class="card-footer bg-transparent">
+          {% if composer.composition_set.count > 0 %}
+          {% if  composer.composition_set.count == 1 %}
+          (1 composition)
+          {% else %}
+          ({{ composer.composition_set.count }} compositions)
+          {% endif %}
+          {% else %}
+          (0 compositions)
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+      
+      
+  
+      {% for composer in composers %}
+      <h2 class="composer_name" id='composer_{{composer.id}}'>
+        {{ composer.composer_first_name_en }}
+        {% if composer.arabic_definite_article %}al-{%endif%}{{ composer.composer_last_name_en }}
+      </h2>
+  
+      {% for image in composer.composerimage_set.all %}
+      {% if image.profile_image == True%}
+      <p><img src="{{ image.composer_image.url}}" style="border: 1px solid #f57900;border-radius: 4px;padding: 5px;width: 150px;"></p>
+      {%endif%}
+      {% endfor %}  
+  
+
+    
+      <ul>
+        {% for composition in composer.composition_set.all %}
+        <li>{{ composition.title_en }}{% if composition.year %} ({{ composition.year }}){% endif %}.</li>
+          <ul>
+            {% for score in composition.score_set.all %}
+            <li>
+              <a href="score/{{ score.id }}/">a music score by:  </a>
+              {{ score.notation_source_en }}
+            </li>
+            {% endfor %}
+          </ul>
+        {% endfor %}
+      </ul>
+      {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock content %}

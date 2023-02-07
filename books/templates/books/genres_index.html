@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% load mathfilters %}
+{% load arabic_numbers %}
+{% load humanize %}
+{% load i18n %} 
+{% get_current_language as LANGUAGE_CODE %}
+
+{% block css%}
+<style>
+.rtl_item {
+  text-align: right;
+  }
+.genreTitle { 
+  color: black;
+  }
+.genreTitle:hover, .genreTitle:focus, .genreTitle:active { 
+  color: DimGrey;
+  text-decoration: none;
+  outline: 0;
+  border: none;
+  -moz-outline-style: none;
+  }
+.bookTitle { }
+  
+.book_count { 
+  font-size: 15px;
+  font-weight: 300;
+  vertical-align: middle; } 
+</style>
+{% endblock %}
+
+
+  <!-- Page Content -->
+
+  {% block content %}
+  
+  {% if LANGUAGE_CODE == 'ar' %}
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-12 p-3">
+      
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="{%url 'books:index' %}">الكتب</a></li>
+            <li class="breadcrumb-item active" aria-current="page">التصنيفات</li>
+          </ol>
+        </nav>
+        
+        <hr>
+
+  <div>
+    <p>يوجد حاليا {{ genres.count}} تصنيف في قاعدة البيانات.</p>
+    <p>إذهب إلى <a href="{% url 'books:authors_index' %}">المؤلفين</a></p>
+  </div>
+  
+  <div>
+    <img src='{{books_wordcloud}}' class="border p-3">
+  </div>
+
+  <div class="accordion col-12 p-3" id="topics">
+  {% for genre in genres %}
+  
+    <div class="accordion-item">
+    
+      <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+        {{ genre.name_ar }}&nbsp;<span class='book_count'> ({{ genre.title_set.count }} كتاب)</span>
+        </button>
+      </h2>
+      
+      <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#topics">
+    
+        <div class="accordion-body">
+          
+          <ul>
+        {% for book in genre.title_set.all|dictsort:"language"|dictsortreversed:"year" %}
+        
+          
+          <li class=rtl_item dir=rtl>
+          <strong><a class=bookTitle href="{% url 'books:book_detail' book.id%}">{{ book.title_ar }}</a></strong>,
+          بقلم:
+            {% for author in book.authors.all%}
+              {% if not forloop.last %}
+                {{ author.last_name_ar }}،
+              {% else %}
+                {{ author.last_name_ar }}
+              {% endif %}
+            {% endfor %}
+          ({{ book.year }}) [{{book.publisher.name_ar}}].
+          </li>
+          
+          
+          
+        {% endfor %}
+      </ul>
+          
+        </div>
+      
+      </div>
+    
+    </div>
+  
+  {% endfor %}
+  </div>
+  <br>
+  
+      </div>
+    </div>
+  </div>     <!-- end Arabic template container -->
+  
+  {% else %} <!--   start of english template   -->
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-12 p-3">
+      
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">HOME</a></li>
+            <li class="breadcrumb-item"><a href="{%url 'books:index' %}">BOOKS</a></li>
+            <li class="breadcrumb-item active" aria-current="page">TOPICS</li>
+          </ol>
+        </nav>
+        
+        <hr>
+
+  <div>
+    <h3>There are {{ genres.count}} topics in the database.</h3>
+    <p>Go to <a href="{% url 'books:authors_index' %}">AUTHORS</a></p>
+  </div>
+  
+  <div>
+    <img src='{{books_wordcloud}}' class="border p-3">
+  </div>
+
+  <div class="accordion col-12 p-3" id="topics">
+  {% for genre in genres %}
+  
+    <div class="accordion-item">
+    
+      <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+        {{ genre.name_en }}&nbsp;<span class='book_count'>({{ genre.title_set.count }} books)</span>
+        </button>
+      </h2>
+      
+      <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#topics">
+    
+        <div class="accordion-body">
+          
+          <ul>
+        {% for book in genre.title_set.all|dictsort:"language"|dictsortreversed:"year" %}
+        
+          
+          <li>
+          <strong><a class=bookTitle href="{% url 'books:book_detail' book.id%}">{{ book.title_en }}</a></strong>,
+          by: 
+          {% for author in book.authors.all%}
+            {% if not forloop.last %}
+              {{ author.last_name_en }},
+            {% else %}
+              {{ author.last_name_en }}
+            {% endif %}
+          {% endfor %}
+          ({{ book.year }}) [{{book.publisher.name_en}}].
+          </li>
+          
+        {% endfor %}
+      </ul>
+          
+        </div>
+      
+      </div>
+    
+    </div>
+  
+  {% endfor %}
+  </div>
+  <br>
+  
+      </div>
+    </div>
+  </div>
+  
+  {% endif %}
+  
+  
+    {% endblock %}
+

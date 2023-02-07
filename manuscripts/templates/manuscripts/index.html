@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load arabic_numbers %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% block css %}
+<style>
+
+  {% if LANGUAGE_CODE == 'ar' %}
+  
+  ol {list-style-type: arabic-indic; !important}
+  
+  {% endif %}
+  
+</style>
+{% endblock css %}
+
+{% block title %}NafColl Books{% endblock %}
+
+
+  <!-- Navigation -->
+
+  <!-- Page Content -->
+
+  {% block content %}
+  
+  {% if LANGUAGE_CODE == 'ar' %} <!-- start of arabic template -->
+  <div class="container">
+  
+    <div class="row">
+      <div class="col-12 p-3">
+      
+        <h1 class="text-center">أهلا بكم في مجموعة المخطوطات</h1>
+        
+        <hr style="max-width:650px" class="mx-auto">
+        
+        <p class="text-center">يوجد حاليا {{ manuscripts_count|enToArNumb }} مخطوط في قاعدة البيانات</a>.</p>
+        
+        <hr style="max-width:650px" class="mx-auto">
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12 p-3">
+        
+        <ol>
+        
+        {% for title in titles %}
+        
+          <li>{{title.arabic_name}}</li>
+          
+          <ol>
+          {% for manuscript in title.manuscript_set.all%}
+            <li>
+              <a href="{% url 'manuscripts:manuscript' manuscript.id %}">مخطوط {{manuscript.call_number|upper}}</a>
+              ({{manuscript.folio_set.count}} صحف).
+            </li>
+          {% endfor%}
+          </ol>
+          
+        {% endfor %}
+        
+        </ol>
+      
+      </div>
+    </div>
+    
+  </div>
+  
+  {% else %} <!-- start of english template -->
+  <div class="container">
+  
+    <div class="row">
+      <div class="col-12 p-3">
+      
+        <h1 class="text-center">Welcome to the Manuscripts Collection</h1>
+        
+        <hr style="max-width:650px" class="mx-auto">
+        
+        <p class="text-center">There are {{ manuscripts_count }} manuscripts in the database</a>.</p>
+        
+        <hr style="max-width:650px" class="mx-auto">
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12 p-3">
+        
+        <ol>
+        
+        {% for title in titles %}
+        
+          <li>{{title.english_translated_name}}</li>
+          
+          <ol>
+          {% for manuscript in title.manuscript_set.all%}
+            <li>
+              <a href="{% url 'manuscripts:manuscript' manuscript.id %}">{{manuscript.call_number|upper}}</a>
+              ({{manuscript.folio_set.count}} folios).
+            </li>
+          {% endfor%}
+          </ol>
+          
+        {% endfor %}
+        
+        </ol>
+      
+      </div>
+    </div>
+    
+  </div>
+  
+  {% endif %}
+  
+  {% endblock content %}

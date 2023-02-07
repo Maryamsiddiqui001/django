@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% load mathfilters %}
+{% load humanize %}
+{% load arabic_numbers %}
+{% load i18n %} 
+{% get_current_language as LANGUAGE_CODE %}
+
+{% block css%}
+<style>
+.rtl_item {
+  text-align: right;
+}
+
+
+.books_count {
+  font-size: 18px;
+  font-weight: 300;
+  color: black;
+  vertical-align: middle;
+  }
+.author_books_list {
+  font-family: 'Apercu Arabic Pro';
+  font-size: 15px;
+  font-weight: 400;
+  }
+</style>
+
+
+{% endblock %}
+{% block title %}NafColl Books{% endblock %}
+
+
+  <!-- Navigation -->
+
+  <!-- Page Content -->
+
+  {% block content %}
+  {% if LANGUAGE_CODE == 'ar' %}
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-12 p-3">
+      
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="{%url 'books:index' %}">الكتب</a></li>
+            <li class="breadcrumb-item active" aria-current="page">المؤلفون</li>
+          </ol>
+        </nav>
+        
+        <hr>
+        
+        <h1 class="text-center">مرحبـــــا بـــــكم فـــــي قائمة المؤلفين</h1>
+        
+        <hr>
+        
+        <p class="text-center">There are {{authors.count}} authors in the database<br>يوجد {{authors.count}} مؤلف في قاعدة البيانات</p>
+        
+        <p class="text-center">Go to <a href="{% url 'books:genres_index' %}">TOPICS</a></p>
+        
+        <hr>
+  
+        {% for author in authors %}
+        {% with author.title_set.all|first as first_object %}
+    
+        <!--Arabic Authors Heading -->
+          
+          <h2>
+          {{author.first_name_ar }} {% if author.arabic_definite_article %}ال{%endif%}{{ author.last_name_ar }}
+        
+            {% if author.title_set.count == 1 %}
+            <span class="books_count">
+          (كتاب واحد)
+            </span></h2>
+            {% elif author.title_set.count == 2 %}
+            <span class="books_count">
+          (كتابين)
+            </span></h2>
+            {% else %}
+            <span class="books_count">
+            ({{ author.title_set.count|enToArNumb }} كتب)
+            </span></h2>
+            {% endif %} <!--end of Arabic plural endings-->
+          
+        
+        {% endwith %}
+    
+          <ul class="author_books_list">
+          {% for book in author.title_set.all|dictsort:"year" %}
+          
+            
+              <li>
+                <a class=bookTitle href={% url 'books:book_detail' book.id %}>
+                {{ book.title_ar }}</a> ({{book.year|enToArNumb}}){% if book.translated %}، مترجم من {{ book.original_language }}.{% endif %}
+              </li>
+            
+            
+          
+          {% endfor %}
+          </ul>
+    
+        {% endfor %}
+        
+      </div>
+    </div>
+  </div>     <!-- end Arabic template container -->
+  
+  {% else %} <!--   start of english template   -->
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-12 p-3">
+      
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">HOME</a></li>
+            <li class="breadcrumb-item"><a href="{%url 'books:index' %}">BOOKS</a></li>
+            <li class="breadcrumb-item active" aria-current="page">AUTHORS</li>
+          </ol>
+        </nav>
+        
+        <hr>
+        
+        <h1 class="text-center"> Welcome to the Authors List</h1>
+        
+        <hr>
+        
+        <p class="text-center">There are {{authors.count}} authors in the database.</p>
+        
+        <p class="text-center">Go to <a href="{% url 'books:genres_index' %}">TOPICS</a></p>
+        <hr>
+  
+        {% for author in authors %}
+        {% with author.title_set.all|first as first_object %}
+          
+        <h2>{{ author.last_name_en }}{% if author.name == 'Anonymous' %}{% elif author.name == '.' %}{% else %}, {{ author.first_name_en }} {% endif %}
+        
+          {% if author.title_set.count == 1 %}
+            <span class="books_count">({{ author.title_set.count }} title)</span></h2>
+            {% else %}
+            <span class="books_count">({{ author.title_set.count }} titles)</span></h2>
+          {% endif %}
+          
+        {% endwith %}
+    
+        <ul class="author_books_list">
+          
+        {% for book in author.title_set.all|dictsort:"year" %}
+            
+          <li>
+            <a class=bookTitle href={% url 'books:book_detail' book.id %}>
+              {{ book.title_en }}
+            </a> ({{ book.year }}){% if book.translated %}, transtaled from {{ book.original_language }}.{% endif %}
+            </li>
+              
+          {% endfor %}
+          </ul>
+    
+        {% endfor %}
+        
+      </div>
+    </div>
+  </div>
+  
+  {% endif %}
+  
+  
+  
+  {% endblock %}
+

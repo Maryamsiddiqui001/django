@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load cms_tags menu_tags sekizai_tags %}
+{% load i18n %} 
+{% load static %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_static_prefix as STATIC_PREFIX %}
+      
+      
+      {% block css %}
+      <style>
+      .min-100 {
+        min-height: 100%;
+      }
+      </style>
+      {% endblock css %}
+      {% block content %}
+      <div class="container">
+        <div class="row">
+          <div class="col-12 p-3">
+          
+          {% if LANGUAGE_CODE == 'ar' %}
+          
+            <div class="row">
+              <div class="col-12">
+              {% for l in lesson %}
+                <h1>{{ l.name_ar }}</h1>
+                <hr>
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{%url 'courses:index'%}">{{ l.course.catagory.name_ar }}</a></li>
+                    <li class="breadcrumb-item"><a href="{%url 'courses:course' l.course.id%}">{{ l.course.name_ar }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ l.name_ar }}</li>
+                  </ol>
+                </nav>
+                
+                <h2>فيديو الشرح:</h2>
+                <hr>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-12 embed-responsive embed-responsive-16by9">
+                <iframe src="{{l.video_link}}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen class="embed-responsive-item" title="Basic Music Theory"></iframe>
+                
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-12">
+              <h2>ملاحظات إضافية:</h2>
+              <hr>
+              {% for obj in lesson %}
+                {% render_placeholder obj.lesson_placeholder language 'ar' %}
+              {% endfor %}
+                
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-12">
+                <h2>اختبار قياس مدى الاستيعاب:</h2>
+                <hr>
+                <ul>
+                {% for q in l.question_set.all %}
+                  <li>{{q}}</li>
+                  
+                  <ol>
+                  {% for a in q.answer_set.all %}
+                      <li>{{ a }}</li>
+                  {% endfor %}
+                  </ol>
+                  
+                {% endfor %}
+                </ul>
+              </div>
+            </div>
+          {% endfor %}
+          
+          {% else %}
+          
+          <div class="row">
+              <div class="col-12">
+              {% for l in lesson %}
+                <h1>{{ l.name_en }}</h1>
+                <hr>
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{%url 'courses:index'%}">{{ l.course.catagory.name_en }}</a></li>
+                    <li class="breadcrumb-item"><a href="{%url 'courses:course' l.course.id%}">{{ l.course.name_en }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ l.name_en }}</li>
+                  </ol>
+                </nav>
+                <h2>Explanatory Video:</h2>
+                <hr>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-12 embed-responsive embed-responsive-16by9">
+                <iframe src="{{l.video_link}}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen class="embed-responsive-item" title="Basic Music Theory"></iframe>
+                
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-12">
+              <h2>Extra Notes:</h2>
+              <hr>
+              {% for obj in lesson %}
+                {% render_placeholder obj.lesson_placeholder language 'en' %}
+              {% endfor %}
+                
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-12">
+                <h2>Comprehension Test:</h2>
+                <hr>
+                <ul>
+                {% for q in l.question_set.all %}
+                  <li>{{q}}</li>
+                  
+                  <ol>
+                  {% for a in q.answer_set.all %}
+                      <li>{{ a }}</li>
+                  {% endfor %}
+                  </ol>
+                  
+                {% endfor %}
+                </ul>
+              </div>
+            </div>
+          {% endfor %}
+          
+          {% endif%}
+            
+            
+            
+          </div>
+        </div>
+      </div>
+      <div id="comp" class="dlog">wait until soundfonts are loaded ...<br></div>
+      {% endblock content %}
+ 
+
+
+      {% block js %}
+      
+        <script src="{% static 'oudwithrad/js/abc2svg-1.js' %}"></script>
+        <script src="{% static 'oudwithrad/js/xmlplay_emb.js' %}"></script>
+      {% endblock js %}

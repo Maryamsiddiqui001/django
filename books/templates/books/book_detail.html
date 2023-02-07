@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load i18n %} 
+{% get_current_language as LANGUAGE_CODE %}
+
+{% block content %}
+
+{% if LANGUAGE_CODE == 'ar' %}
+<div class="container">
+    <div class="row">
+      <div class="col-12 p-3">
+        
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="{%url 'books:index' %}">الكتب</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ book.title_ar }}</li>
+          </ol>
+        </nav>
+        
+        <hr>
+                
+        <h1>{{ book.title_ar }}</h1>
+    
+        <h3>تأليف: 
+        
+        {% for author in book.authors.all %}
+        
+          {% if not forloop.last %}
+            {{ author.first_name_ar }} {{author.last_name_ar }}،
+          {% else %}
+            {{ author.first_name_ar }} {{author.last_name_ar }}.
+          {% endif %}
+          
+        {% endfor %}
+        </h3>
+        
+        
+        
+
+        صنف تحت: | {% for genre in book.genres.all %}
+          {{ genre.name_ar }} | 
+        {% endfor %} <br>
+    
+        {% if book.cover %}
+        <img src="{% thumbnail book.cover 300x400 crop %}"><br>
+        {% else %}
+        لا يوجد صورة لهذا الكتاب.
+        {% endif %}
+
+    
+        <p>نشر في سنة {{ book.year }} من قبل {{ book.publisher.name_ar }}.</p>
+
+        <p>اللغة: <b>{{ book.language|upper }}</b>.
+        {% if book.translated %}
+        Translated from {{ book.original_language|upper}}, by: 
+        {% for translator in book.translators.all %}
+          {{ translator }} | 
+        {% endfor %}
+        {% endif %}
+        </p>
+    
+        <p>
+        اسم الملف: {{ book.file }}</a>
+        </p>
+    
+      </div>
+    </div>
+  </div>
+{% else %}
+  <div class="container">
+    <div class="row">
+      <div class="col-12 p-3">
+        
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">HOME</a></li>
+            <li class="breadcrumb-item"><a href="{%url 'books:index' %}">Books</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ book.title_en }}</li>
+          </ol>
+        </nav>
+        
+        <hr>
+                
+        <h1>{{ book.title_en }}</h1>
+    
+        <h3>Wirtten by: 
+        
+        {% for author in book.authors.all %}
+        
+          {% if not forloop.last %}
+            {{ author.first_name_en }} {{author.last_name_en }},
+          {% else %}
+            {{ author.first_name_en }} {{author.last_name_en }}.
+          {% endif %}
+          
+        {% endfor %}
+        </h3>
+        
+        
+        
+
+        Filed under: | {% for genre in book.genres.all %}
+          {{ genre.name_en }} | 
+        {% endfor %} <br>
+    
+        {% if book.cover %}
+        <img src="{% thumbnail book.cover 300x400 crop %}"><br>
+        {% else %}
+        No cover is added.
+        {% endif %}
+
+    
+        <p>Published in {{ book.year }} by {{ book.publisher.name_en }}.</p>
+
+        <p>Language <b>{{ book.language|upper }}</b>.
+        {% if book.translated %}
+        Translated from {{ book.original_language|upper}}, by: 
+        {% for translator in book.translators.all %}
+          {{ translator }} | 
+        {% endfor %}
+        {% endif %}
+        </p>
+    
+        <p>
+        file name: {{ book.file }}</a>
+        </p>
+    
+      </div>
+    </div>
+  </div>
+{% endif %}
+{% endblock content %}

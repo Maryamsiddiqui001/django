@@ -1,0 +1,25 @@
+{% load menu_tags %}
+
+{% for child in children %}
+  {% if child.children %}
+  
+  <li class="nav-item dropdown text-center">
+    <a class="nav-link dropdown-toggle" href="{{ child.attr.redirect_url|default:child.get_absolute_url }}" id="navbarDropdown-{{child.id}}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      {{ child.get_menu_title }}
+    </a>
+    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown-{{child.id}}">
+      <li class="text-center"><strong><a class="nav-link" href="{{ child.attr.redirect_url|default:child.get_absolute_url }}">{{ child.get_menu_title }}</a></strong></li>
+      <li><hr class="dropdown-divider"></li>
+      
+      {% show_menu from_level to_level extra_inactive extra_active template "" "" child %}
+      
+    </ul>
+  
+  {% else %}
+    <li class="nav-item text-center">
+      <a class="nav-link" href="{{ child.attr.redirect_url|default:child.get_absolute_url }}">{{ child.get_menu_title }}</a>
+    </li>
+  {% endif %}
+    
+
+{% endfor %}

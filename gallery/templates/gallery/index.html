@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load cms_tags menu_tags sekizai_tags %}
+{% load i18n %} 
+{% load static %}
+{% load thumbnail %}
+{% get_current_language as LANGUAGE_CODE %}
+      
+      
+      {% block css %}
+      
+      <style>
+      .min-100 {
+        min-height: 100%;
+      }
+      .carousel .carousel-item {
+        height: 400px;
+      }
+      .carousel-caption{
+        background: rgba(0, 0, 0, 0.8);
+      } 
+
+      .carousel-caption h5{
+          color:white;
+      }
+
+      .carousel-caption p{
+          color:orange;
+      }
+      #carouselExampleCaptions > div.carousel-indicators > button {background-color:white;}
+      .carousel-item img {
+          max-height: 400px;
+      }
+      </style>
+      
+      {% endblock css %}
+      
+      {% block content %}
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-12 p-3">
+          
+          {% if LANGUAGE_CODE == 'ar' %}
+          <h1>أهلا بكم في معرض الأعواد</h1>
+          <hr>
+          <h2>أعواد مميزة</h2>
+          <div id="carouselExampleCaptions" class="carousel carousel-dark slide" data-bs-ride="false">
+          
+            <div class="carousel-indicators">
+            {% for image in featured_images %}
+              {% if forloop.first %}
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{forloop.counter0}}" class="active" aria-current="true" aria-label="Slide {{forloop.counter0}}"></button>
+              {% else %}
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{forloop.counter0}}" class="" aria-current="true" aria-label="Slide {{forloop.counter0}}"></button>
+              {% endif %}
+            {% endfor %}
+            </div>
+            
+            
+            <div class="carousel-inner">
+            
+            {% for image in featured_images %}
+            
+            
+            
+              {% if forloop.first %}
+              <div class="carousel-item active">
+              {% else %}
+              <div class="carousel-item ">
+              {% endif %}
+              
+                <img style="margin:auto;position:relative;" src="{% thumbnail image.image_file 300x400 crop %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                
+                  {% if image.oud.maker.all.count > 1 %}
+                  
+                  <h5>
+                  {% for oud_maker in image.oud.maker.all %}
+                  {{oud_maker.first_name_ar}} {{oud_maker.last_name_ar}}، 
+                  {% endfor %}
+                  {{image.oud.year}}
+                  </h5>
+                  
+                  {% else %}
+                  
+                  <h5>{{image.oud.maker.all.0.first_name_ar}} {{image.oud.maker.all.0.last_name_ar}} {{image.oud.year}}</h5>
+                  {% endif %}
+                  
+                  <p>{{image.description_ar}}</p>
+                </div>
+              </div>
+              {% endfor %}
+              
+            </div>
+            
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          
+          <p>الصناع:</p>
+          <ul>
+            {% for maker in makers %}
+              
+              <li><a href="{% url 'gallery:maker' maker.id %}">
+                
+                {%if maker.oud_set.count == 0%}
+                {{maker.first_name_ar}} {{maker.last_name_ar}} ({{maker.birth_year}} - {{maker.death_year}})
+                [لا يتوفر أعود لهذا الصانع]
+                {%elif maker.oud_set.count == 1%}
+                {{maker.first_name_ar}} {{maker.last_name_ar}} ({{maker.birth_year}} - {{maker.death_year}})
+                [عود واحد]
+                {%elif maker.oud_set.count == 2%}
+                {{maker.first_name_ar}} {{maker.last_name_ar}} ({{maker.birth_year}} - {{maker.death_year}})
+                [عودان]
+                {% else %}
+                {{maker.first_name_ar}} {{maker.last_name_ar}} ({{maker.birth_year}} - {{maker.death_year}})
+                [{{maker.oud_set.count}} أعواد]
+                {% endif%}
+                
+              </a></li>
+              
+            {% endfor %}
+          </ul>
+          
+          {% else %}
+          
+          <h1>Welcome to the Ouds Gallery</h1>
+          
+          <hr>
+          <h2>Featured Ouds:</h2>
+          <div id="carouselExampleCaptions" class="carousel carousel-dark slide" data-bs-ride="false">
+          
+            <div class="carousel-indicators">
+            {% for image in featured_images %}
+              {% if forloop.first %}
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{forloop.counter0}}" class="active" aria-current="true" aria-label="Slide {{forloop.counter0}}"></button>
+              {% else %}
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{forloop.counter0}}" class="" aria-current="true" aria-label="Slide {{forloop.counter0}}"></button>
+              {% endif %}
+            {% endfor %}
+            </div>
+            
+            
+            <div class="carousel-inner">
+            
+            {% for image in featured_images %}
+            
+            
+            
+              {% if forloop.first %}
+              <div class="carousel-item active">
+              {% else %}
+              <div class="carousel-item ">
+              {% endif %}
+                <img style="margin:auto;position:relative;" src="{% thumbnail image.image_file 300x400 crop %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                
+                  {% if image.oud.maker.all.count > 1 %}
+                  
+                  <h5>
+                  {% for oud_maker in image.oud.maker.all %}
+                  {{oud_maker.first_name_en}} {{oud_maker.last_name_en}}, 
+                  {% endfor %}
+                  {{image.oud.year}}
+                  </h5>
+                  
+                  {% else %}
+                  
+                  <h5>{{image.oud.maker.all.0.first_name_en}} {{image.oud.maker.all.0.last_name_en}} {{image.oud.year}}</h5>
+                  {% endif %}
+                  
+                  <p>{{image.description_en}}</p>
+                  
+                </div>
+              </div>
+              {% endfor %}
+              
+            </div>
+            
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          
+          <p>The following makers are available:</p>
+          <ul>
+            {% for maker in makers %}
+              
+              <li><a href="{% url 'gallery:maker' maker.id %}">
+              
+                {%if maker.oud_set.count == 0%}
+                {{maker.first_name_en}} {{maker.last_name_en}} ({{maker.birth_year}} - {{maker.death_year}})
+                [no available ouds]
+                {%elif maker.oud_set.count == 1%}
+                {{maker.first_name_en}} {{maker.last_name_en}} ({{maker.birth_year}} - {{maker.death_year}})
+                [one oud]
+                {%elif maker.oud_set.count == 2%}
+                {{maker.first_name_en}} {{maker.last_name_en}} ({{maker.birth_year}} - {{maker.death_year}})
+                [two ouds]
+                {% else %}
+                {{maker.first_name_en}} {{maker.last_name_en}} ({{maker.birth_year}} - {{maker.death_year}})
+                [{{maker.oud_set.count}} ouds]
+                {% endif%}
+              
+              </a></li>
+              
+              
+            {% endfor %}
+          </ul>
+          
+          {% endif%}
+            
+            
+            {% placeholder "content" %}
+          </div>
+        </div>
+      </div>
+      {% endblock content %}
+ 
+
+
+

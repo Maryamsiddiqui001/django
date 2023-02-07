@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load cms_tags menu_tags sekizai_tags %}
+{% load i18n %} 
+{% load static %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_static_prefix as STATIC_PREFIX %}
+      
+      
+      {% block css %}
+      <style>
+      .min-100 {
+        min-height: 100%;
+      }
+      </style>
+      {% endblock css %}
+      {% block content %}
+      <div class="container">
+        <div class="row">
+          <div class="col-12 p-3">
+          
+          {% if LANGUAGE_CODE == 'ar' %}
+          
+            <div class="row">
+              <div class="col-12">
+              {% for oud in ouds %}
+                <h1>{{ oud.maker }}</h1>
+                <hr>
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{%url 'gallery:index'%}">المعرض</a></li>
+                    <li class="breadcrumb-item"><a href="{%url 'gallery:maker' oud.maker.id%}">{{ oud.maker.first_name_ar }} {{ oud.maker.last_name_ar }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ oud.year }} - {{oud.serial_number}}</li>
+                  </ol>
+                </nav>
+                
+                <h2>العود</h2>
+                <hr>
+              </div>
+            </div>
+            
+            
+            
+            <div class="row">
+              <div class="col-12">
+              <h2>ملاحظات إضافية:</h2>
+              <hr>
+              {% for obj in oud %}
+                {% render_placeholder obj.oud_placeholder language 'ar' %}
+              {% endfor %}
+                
+              </div>
+            </div>
+            
+          {% endfor %}
+          
+          {% else %}
+          
+          <div class="row">
+              <div class="col-12">
+              {% for oud in ouds %}
+                <h1>{{ oud.maker }}</h1>
+                <hr>
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{%url 'gallery:index'%}">Gallery</a></li>
+                    <li class="breadcrumb-item"><a href="{%url 'gallery:maker' oud.maker.id%}">{{ oud.maker.first_name_en }} {{ oud.maker.last_name_en }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ oud.year }} - {{oud.serial_number}}</li>
+                  </ol>
+                </nav>
+                
+                <h2>Oud</h2>
+                <hr>
+              </div>
+            </div>
+            
+            
+            
+            <div class="row">
+              <div class="col-12">
+              <h2>Extra Notes</h2>
+              <hr>
+              {% for obj in oud %}
+                {% render_placeholder obj.oud_placeholder language 'en' %}
+              {% endfor %}
+                
+              </div>
+            </div>
+          
+          {% endfor %}
+          
+          {% endif%}
+            
+            
+            
+          </div>
+        </div>
+      </div>
+      
+      {% endblock content %}
+ 
+
+
+      {% block js %}
+      
+      {% endblock js %}

@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% load arabic_numbers %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% load static %}
+
+{% block css %}
+<style>
+
+  {% if LANGUAGE_CODE == 'ar' %}
+  
+  ol {list-style-type: arabic-indic; !important}
+  
+  {% endif %}
+  
+</style>
+{% endblock css %}
+
+{% block title %}NafColl Books{% endblock %}
+
+
+  <!-- Navigation -->
+
+  <!-- Page Content -->
+
+  {% block content %}
+  
+  {% if LANGUAGE_CODE == 'ar' %} <!-- start of arabic template -->
+  <div class="container">
+  
+    <div class="row">
+      <div class="col-12 p-3">
+      
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+            <li class="breadcrumb-item"><a href="{%url 'manuscripts:index' %}">المخطوطات</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{manuscript.title.arabic_name}} من مخطوط {{manuscript.call_number|upper}}</li>
+          </ol>
+        </nav>
+        
+        <hr>
+      
+      <h1 class="text-center">{{manuscript.title.arabic_name}} من مخطوط {{manuscript.call_number|upper}}</h1>
+      
+      <hr style="max-width:75%;" class="mx-auto">
+      
+      <div id="current_folio" class="p-3">الصحيفة الحالية 1 من {{manuscript.folio_set.count}}</div>
+      
+      <div id="openseadragon1" style="height: 500px;" class="col-lg-8 col-md-10 col-sm-12 border mx-auto m-3" dir="ltr"></div>
+      
+      <div id="transcription" dir="rtl"><h2>تفريغ الصحيفة: </h2>{{manuscript.folio_set.first.transcription|safe}}</div>
+      
+      </div>
+    </div>
+    
+  </div>
+  
+  <script src="{% static 'manuscripts/assets/js/openseadragon-bin-3.0.0/openseadragon.min.js'%}"></script>
+
+  <script type="text/javascript">
+    var viewer = OpenSeadragon({
+      id: "openseadragon1",
+      prefixUrl: "{% static 'manuscripts/assets/js/openseadragon-bin-3.0.0/images/' %}",
+      tileSources: [
+        {% for folio in manuscript.folio_set.all|dictsort:"page_index" %}
+        {% with 'manuscripts/deepzoom/'|add:manuscript.call_number|add:'/'|add:folio.file_name as image_static %}
+        '{% static image_static %}', 
+        {% endwith %}
+        {% endfor %}],
+      sequenceMode: true,
+    });
+    
+    var transcriptions = {};
+    var folio_count = {{manuscript.folio_set.count}};
+    
+    {% for folio in manuscript.folio_set.all %}
+    transcriptions[{{folio.page_index}}] = '{% filter escapejs %}{{folio.transcription|safe}}{% endfilter %}';
+    {% endfor %}
+    
+    //document.getElementById("openseadragon1").addEventListener("page", displayTrans);
+    viewer.addHandler('page', functionName);
+    function functionName(page) {
+      current_folio = document.getElementById("current_folio");
+      current_folio.innerHTML = "";
+      current_folio.innerHTML = "الصحيفة الحالية: " + (page.page + 1) + ' من ' + folio_count;
+      mydiv = document.getElementById("transcription");
+      mydiv.innerHTML = "";
+      mydiv.innerHTML = "<h2>تفريغ الصحيفة: </h2>" + transcriptions[page.page+1];
+      console.log(page.page+1);
+      console.log(transcriptions[page.page+1]);
+      console.log(transcriptions);
+    };
+  </script>
+  
+  {% else %}
+  
+  <div class="container">
+  
+    <div class="row">
+      <div class="col-12 p-3">
+      
+      <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">HOME</a></li>
+            <li class="breadcrumb-item"><a href="{%url 'manuscripts:index' %}">MANUSCRIPTS</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+            {{manuscript.title.english_translated_name}} from the Manuscript {{manuscript.call_number|upper}}
+            </li>
+          </ol>
+        </nav>
+        
+        <hr>
+      
+      <h1 class="text-center">{{manuscript.title.english_translated_name}} from the Manuscript {{manuscript.call_number|upper}}</h1>
+      
+      <hr style="max-width:75%;" class="mx-auto">
+      
+      <div id="current_folio" class="p-3">Current Folio : 1 of {{manuscript.folio_set.count}}</div>
+      
+      <div id="openseadragon1" style="height: 500px;" class="col-lg-8 col-md-10 col-sm-12 border mx-auto m-3" dir="ltr"></div>
+      
+      <div id="transcription"><h2>Folio Transcription: </h2><div dir='rtl'>{{manuscript.folio_set.first.transcription|safe}}</div></div>
+      
+      </div>
+    </div>
+    
+  </div>
+  
+  <script src="{% static 'manuscripts/assets/js/openseadragon-bin-3.0.0/openseadragon.min.js'%}"></script>
+
+  <script type="text/javascript">
+    var viewer = OpenSeadragon({
+      id: "openseadragon1",
+      prefixUrl: "{% static 'manuscripts/assets/js/openseadragon-bin-3.0.0/images/' %}",
+      tileSources: [
+        {% for folio in manuscript.folio_set.all|dictsort:"page_index" %}
+        {% with 'manuscripts/deepzoom/'|add:manuscript.call_number|add:'/'|add:folio.file_name as image_static %}
+        '{% static image_static %}', 
+        {% endwith %}
+        {% endfor %}],
+      sequenceMode: true,
+    });
+    
+    var transcriptions = {};
+    var folio_count = {{manuscript.folio_set.count}};
+    
+    {% for folio in manuscript.folio_set.all %}
+    transcriptions[{{folio.page_index}}] = '{% filter escapejs %}{{folio.transcription|safe}}{% endfilter %}';
+    {% endfor %}
+    
+    //document.getElementById("openseadragon1").addEventListener("page", displayTrans);
+    viewer.addHandler('page', functionName);
+    function functionName(page) {
+      current_folio = document.getElementById("current_folio");
+      current_folio.innerHTML = "";
+      current_folio.innerHTML = "Current Folio : " + (page.page + 1) + ' of ' + folio_count;
+      mydiv = document.getElementById("transcription");
+      mydiv.innerHTML = "";
+      mydiv.innerHTML = "<h2 dir=ltr>Folio Transcription: </h2><div dir='rtl'>" + transcriptions[page.page+1] +'</div>';
+      console.log(page.page+1);
+      console.log(transcriptions[page.page+1]);
+      console.log(transcriptions);
+    };
+  </script>
+  
+  {% endif %}
+  
+  {% endblock %}

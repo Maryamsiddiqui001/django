@@ -1,0 +1,31 @@
+{% extends 'agency_base.html' %}
+{% load cms_tags menu_tags sekizai_tags %}
+{% load i18n %} 
+{% load static %}
+{% get_current_language as LANGUAGE_CODE %}
+      
+      
+      {% block css %}
+      <style>
+      .min-100 {
+        min-height: 100%;
+      }
+      </style>
+      {% endblock css %}
+      {% block content %}
+      <div class="container">
+        <div class="row">
+          <div class="col-12 p-3">
+            
+            {% placeholder "content" %}
+            
+            
+            
+          </div>
+        </div>
+      </div>
+      {% endblock content %}
+ 
+
+
+

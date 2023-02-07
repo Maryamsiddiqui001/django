@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load cms_tags menu_tags sekizai_tags %}
+{% load i18n %} 
+{% load static %}
+{% load thumbnail %}
+
+{% get_current_language as LANGUAGE_CODE %}
+      
+      
+      {% block css %}
+      
+      <style>
+      
+      </style>
+      
+      {% endblock css %}
+      
+      {% block content %}
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-12 p-3">
+            
+            {% if LANGUAGE_CODE == 'ar' %}
+            
+            <h1>{{ maker.first_name_ar }} {{ maker.middle_name_ar }} {{ maker.last_name_ar }}</h1>
+            {%if ouds.count == 0%}
+            <p>لا يتوفر أعود لهذا الصانع</p>
+            {%elif ouds.count == 1%}
+            <p>يتوفر عود واحد لهذا الصانع</p>
+            {%elif ouds.count == 2%}
+            <p>يتوفر عودان لهذا الصانع</p>
+            {% else %}
+            <p>يتوفر {{ouds.count}} أعواد لهذا الصانع<p>
+            {% endif%}
+            
+            {% for oud in ouds %}
+              <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                <div class="card-header">الرقم المتسلسل: {{oud.serial_number}}</div>
+                
+                {% for image in oud.oudimage_set.all %}
+                {% if image.is_main %}
+                
+                <img class="card-img-top" src="{% thumbnail image.image_file 250x250 crop %}" alt="Card image cap">
+                {% endif%}
+                {% endfor %}
+                
+                <div class="card-body">
+                  <h5 class="card-title">{{oud.place_of_manufacture_ar}} - {{oud.year}}</h5>
+                  <p class="card-text">الصور: {{oud.oudimage_set.count}}</p>
+                </div>
+              </div>
+            {% endfor %}
+            
+            {% else %}
+            
+            <h1>{{ maker.first_name_en }} {{ maker.middle_name_en }} {{ maker.last_name_en }}</h1>
+            
+            {%if ouds.count == 0%}
+            <p>There are no available ouds for this maker.</p>
+            {%elif ouds.count == 1%}
+            <p>There is 1 oud for this maker.</p>
+            {% else %}
+            <p>There are {{ouds.count}} ouds for this maker.<p>
+            {% endif%}
+            
+            {% for oud in ouds %}
+              <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+                <div class="card-header">SN: {{oud.serial_number}}</div>
+                
+                {% for image in oud.oudimage_set.all %}
+                {% if image.is_main %}
+                
+                <img class="card-img-top" src="{% thumbnail image.image_file 250x250 crop %}" alt="Card image cap">
+                {% endif%}
+                {% endfor %}
+                
+                <div class="card-body">
+                  <h5 class="card-title">{{oud.place_of_manufacture_en}} - {{oud.year}}</h5>
+                  <p class="card-text">Photos: {{oud.oudimage_set.count}}</p>
+                </div>
+              </div>
+            {% endfor %}
+            
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      
+      {% endblock content %}
+      

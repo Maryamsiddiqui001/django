@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load cms_tags menu_tags sekizai_tags %}
+{% load i18n %} 
+{% load static %}
+{% get_current_language as LANGUAGE_CODE %}
+      
+      
+      {% block css %}
+      <style>
+      
+      </style>
+      {% endblock css %}
+      
+      {% block content %}
+      <main class="flex-shrink-0">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 p-3">
+          
+          {% if LANGUAGE_CODE == 'ar' %}
+          
+          {% for c in course %}
+            <h1>{{c}}</h1>
+            <p>يتوفر حاليا الدروس التالية في هذه الدورة:</p>
+            <ul>
+            {% for lesson in c.lesson_set.all %}
+              <li><a href="{% url 'courses:lesson' lesson.id %}">{{lesson.name_ar}}</a></li>
+            {% endfor %}
+            </ul>
+            
+          {% endfor %}
+          
+          {% else %}
+          
+          {% for c in course %}
+            <h1>{{c}}</h1>
+            <p>The following lessons are available for this course:</p>
+            <ul>
+            {% for lesson in c.lesson_set.all %}
+              <li><a href="{% url 'courses:lesson' lesson.id %}">{{lesson.name_en}}</a></li>
+            {% endfor %}
+            </ul>
+            
+          {% endfor %}
+          
+          {% endif%}
+            
+            
+            {% placeholder "content" %}
+          </div>
+        </div>
+      </div>
+      </main>
+      {% endblock content %}
+ 
+
+
+

@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% load mathfilters %}
+{% load arabic_numbers %}
+{% load humanize %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% block css %}
+<style>
+
+  {% if LANGUAGE_CODE == 'ar' %}
+  
+  ol {list-style-type: arabic-indic; !important}
+  
+  {% endif %}
+  
+</style>
+{% endblock css %}
+
+{% block title %}NafColl Books{% endblock %}
+
+
+  <!-- Navigation -->
+
+  <!-- Page Content -->
+
+  {% block content %}
+  
+  {% if LANGUAGE_CODE == 'ar' %}
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-12 p-3">
+        <h1 class="text-center">أهلا بكم في مجموعة الكتب</h1>
+        
+        <hr style="max-width:650px" class="mx-auto">
+        
+        <p class="text-center">يوجد حاليا {{ all_books.count|enToArNumb }} كتب في قاعدة البيانات, 
+        من قبل {{ authors_count|enToArNumb }} <a href="{% url 'books:authors_index' %}">كاتبا</a>، موزعة على {{ genres_count|enToArNumb }} <a href="{% url 'books:genres_index' %}">تصنيف</a>.</p>
+        
+        <p class="text-center">قائمة الكتب مرتبة بحسب
+        {% if order_by == 'year' %}
+          سنة الطباعة.<br>
+        {% else %}
+          عنوان الكتاب<br>
+        {% endif %}
+        قم بترتيب الكتب بحسب: <a href="{% url 'books:index' %}?order_by=year">سنة الطباعة</a> أو بحسب 
+        <a href="{% url 'books:index' %}?order_by=title_en">العنوان</a>.</p>
+        
+        <hr style="max-width:650px" class="mx-auto">
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12">
+      
+        <ol>
+        {% for book in all_books %}
+          
+          <li>
+            <a class=bookTitle href="{% url 'books:book_detail' book.id %}">
+              <strong>{{ book.title_ar }}</strong>
+            </a>
+        
+            {% if user.is_superuser %}<a class="mgt_links" href="/admin/books/title/{{ book.id }}/change/">(تعديل)</a>{% endif %}<br>
+      
+            <span class='book_detail'>
+            
+            {% for author in book.authors.all %}
+            
+              {% if not forloop.last %}
+                {{ author.first_name_ar }} {% if author.arabic_definite_article %}ال{%endif%}{{ author.last_name_ar }} و
+              {% else %}
+                  {{ author.first_name_ar }} {% if author.arabic_definite_article %}ال{%endif%}{{ author.last_name_ar }}،
+              {% endif %}
+              
+            {% endfor %}
+          
+            {{ book.publisher.name_ar }} <strong>[{{book.year|enToArNumb}}]</strong>
+            </span>
+          </li>
+      
+        {% endfor %}
+        </ol>
+      
+      </div>
+    </div>
+    
+  </div><!--end of container-->
+  
+  {% else %}
+  
+  <div class="container">
+  
+    <div class="row">
+      <div class="col-12 p-3">
+        <h1 class="text-center">Welcome to the Books Collection</h1>
+        
+        <hr style="max-width:650px" class="mx-auto">
+        
+        <p class="text-center">There are {{ all_books.count }} books in the database, 
+        from {{ authors_count }} <a href="{% url 'books:authors_index' %}">authors</a>, covering {{ genres_count }} <a href="{% url 'books:genres_index' %}">topics</a>.</p>
+        
+        <p class="text-center">The displayed books list is ordered by 
+        {% if order_by == 'year' %}
+          publication {{order_by}}.<br>
+        {% else %}
+          {{ order_by }}.<br>
+        {% endif %}
+        Order the books by: <a href="{% url 'books:index' %}?order_by=year">year</a> or by 
+        <a href="{% url 'books:index' %}?order_by=title_en">title</a>.</p>
+        
+        <hr style="max-width:650px" class="mx-auto">
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12">
+      
+        <ol>
+        {% for book in all_books %}
+    
+          <li>
+            <a class=bookTitle href="{% url 'books:book_detail' book.id %}">
+              <strong>{{ book.title_en }}</strong>
+            </a>
+          
+            {% if user.is_superuser %}<a class="mgt_links" href="/admin/books/title/{{ book.id }}/change/">(edit)</a>{% endif %}<br>
+      
+            <span class='book_detail'>
+            {% for author in book.authors.all %}
+              {% if not forloop.last %}
+                {{ author.first_name_en }} {{ author.last_name_en }},
+              {% else %}
+                {{ author.first_name_en }} {{ author.last_name_en }}.
+              {% endif %}
+            {% endfor %}
+          
+            {{ book.publisher }} <strong>[{{ book.year }}]</strong>
+            </span>
+          </li>
+          
+        {% endfor %}
+        </ol>
+      
+      </div>
+    </div>
+    
+  </div>
+  
+  {% endif %}
+  
+  
+  {% endblock %}

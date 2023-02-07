@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load cms_tags menu_tags sekizai_tags %}
+{% load i18n %} 
+{% load static %}
+{% get_current_language as LANGUAGE_CODE %}
+      
+      
+      {% block css %}
+      <style>
+      .min-100 {
+        min-height: 100%;
+      }
+      </style>
+      {% endblock css %}
+      {% block content %}
+      <div class="container">
+        <div class="row">
+          <div class="col-12 p-3">
+            
+            {% placeholder "content" %}
+            
+          </div>
+        </div>
+      </div>
+      <div id="comp" class="dlog">wait until soundfonts are loaded ...<br></div>
+      {% endblock content %}
+      
+
+      {% block js %}
+        <script src="{% static 'oudwithrad/js/abc2svg-1.js' %}"></script>
+        <script src="{% static 'oudwithrad/js/xmlplay_emb.js' %}"></script>
+      {% endblock js %}
+

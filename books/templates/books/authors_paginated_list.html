@@ -1,0 +1,96 @@
+{% extends "books/base.html" %}
+{% load mathfilters %}
+{% load humanize %}
+{% load arabic_numbers %}
+
+{% block style%}
+<style>
+.rtl_item {
+  text-align: right;
+}
+h1 {
+  font-family: 'Apercu Arabic Pro';
+  font-size: 40px;
+  text-align: center;
+  font-weight: 600;
+  }
+h2 {
+  font-size: 25px;
+  font-weight: 600;
+}
+.books_count {
+  font-size: 18px;
+  font-weight: 300;
+  color: black;
+  vertical-align: middle;
+  }
+.author_books_list {
+  font-family: 'Apercu Arabic Pro';
+  font-size: 15px;
+  font-weight: 400;
+  }
+</style>
+
+
+{% endblock %}
+{% block title %}NafColl Books{% endblock %}
+{% block page_content %}
+  <div style="margin-top:40px">
+  <h1> Welcome to the Authors List</h1>
+  <h1>مرحبـــــا بـــــكم فـــــي قائمة المؤلفين</h1>
+  
+  <hr style="max-width:650px">
+  
+  <p style="text-align:center">There are {{ page.paginator.count }} authors in the database<br>يوجد {{ page.paginator.count }} مؤلف في قاعدة البيانات</p>
+  <hr style="max-width:650px">
+  <div class="pagination">
+  <table align=center>
+    <tr><th colspan="{{page.paginator.num_pages}}" class="text-center">Browse by Author Last Name:</th></tr> 
+    <tr>
+    {% for p in page.paginator.pages %}
+
+      {% if p == page %}
+          <td>|<span class="selected">{{ p }}</span>|</td>
+      {% else %}
+          <td>|<a href="?page={{ p.number }}">{{ p }}</a>|</td>
+      {% endif %}
+
+    {% endfor %}
+    </tr>
+  </table>
+</div>
+
+
+{% for author in page.object_list %}
+{% with author.title_set.all|first as first_object %}
+{% if first_object.language == 'ar' %}
+        <h2 dir=rtl align=right>
+        {{author.name }} {% if author.arabic_definite_article %}ال{%endif%}{{ author.last_name }}
+        
+          {% if author.title_set.count == 1 %}
+          <span class="books_count">
+          (كتاب واحد)
+          </span></h2>
+          {% elif author.title_set.count == 2 %}
+          <span class="books_count">
+          (كتابين)
+          </span></h2>
+          {% else %}
+          <span class="books_count">
+            ({{ author.title_set.count|enToArNumb }} كتب)
+            </span></h2>
+          {% endif %} <!--end of Arabic plural endings-->
+          
+      <!--English Authors -->
+      {% else %} 
+        <h2>{{ author.last_name }}{% if author.name == 'Anonymous' %}{% elif author.name == '.' %}{% else %}, {{ author.name }} {% endif %}
+        {% if author.title_set.count == 1 %}
+          <span class="books_count">({{ author.title_set.count }} title)</span></h2>
+        {% else %}
+          <span class="books_count">({{ author.title_set.count }} titles)</span></h2>
+        {% endif %}
+      {% endif %}<!--end of Authors branches-->
+      {% endwith %}
+{% endfor %}
+
+{% endblock %}

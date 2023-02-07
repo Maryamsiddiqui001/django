@@ -1,0 +1,196 @@
+ {% load static %}
+ {% load mathfilters %}
+ {% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>{% block title %}NafColl Movies{% endblock %}</title>
+  
+  <style>
+    
+    @font-face {
+    font-family: 'Apercu Arabic Pro';
+    src: url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Light.eot" %});
+    src: local('Apercu Arabic Pro Light'), local('ApercuArabicPro-Light'),
+        url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Light.eot?#iefix" %}) format('embedded-opentype'),
+        url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Light.woff2" %}) format('woff2'),
+        url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Light.woff" %}) format('woff'),
+        url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Light.ttf" %}) format('truetype');
+    font-weight: 300;
+    font-style: normal;}
+    
+    @font-face {
+    font-family: 'Apercu Arabic Pro';
+    src: url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Regular.eot" %});
+    src: local('Apercu Arabic Pro Regular'), local('ApercuArabicPro-Regular'),
+        url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Regular.eot?#iefix" %}) format('embedded-opentype'),
+        url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Regular.woff2" %}) format('woff2'),
+        url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Regular.woff" %}) format('woff'),
+        url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Regular.ttf" %}) format('truetype');
+    font-weight: normal;
+    font-style: normal;}
+    
+    @font-face {
+    font-family: 'Apercu Arabic Pro';
+    src: url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Medium.eot" %});
+    src: local('Apercu Arabic Pro Medium'), local('ApercuArabicPro-Medium'),
+        url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Medium.eot?#iefix" %}) format('embedded-opentype'),
+        url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Medium.woff2" %}) format('woff2'),
+        url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Medium.woff" %}) format('woff'),
+        url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Medium.ttf" %}) format('truetype');
+    font-weight: 500;
+    font-style: normal;}
+    
+    @font-face {
+    font-family: 'Apercu Arabic Pro';
+    src: url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Bold.eot" %});
+    src: local('Apercu Arabic Pro Bold'), local('ApercuArabicPro-Bold'),
+        url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Bold.eot?#iefix" %}) format('embedded-opentype'),
+        url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Bold.woff2" %}) format('woff2'),
+        url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Bold.woff" %}) format('woff'),
+        url({% static "books/fonts/ApercuArabic/ApercuArabicPro-Bold.ttf" %}) format('truetype');
+    font-weight: bold;
+    font-style: normal;}
+    @font-face {
+    font-family: 'AvenirArabic';
+    src: url({% static "books/fonts/AvenirArabic/AvenirArabic_Book.eot" %});
+    src: local('Avenir Arabic Book'), local('AvenirArabic-Book'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Book.eot?#iefix" %}) format('embedded-opentype'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Book.woff2" %}) format('woff2'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Book.woff" %}) format('woff'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Book.ttf" %}) format('truetype');
+    font-weight: normal;
+    font-style: normal;}
+    
+    @font-face {
+    font-family: 'AvenirArabic';
+    src: url({% static "books/fonts/AvenirArabic/AvenirArabic_Regular.eot" %});
+    src: local('Avenir Arabic Regular'), local('AvenirArabic-Regular'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Regular.eot?#iefix" %}) format('embedded-opentype'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Regular.woff2" %}) format('woff2'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Regular.woff" %}) format('woff'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Regular.ttf" %}) format('truetype');
+    font-weight: 400;
+    font-style: normal;}
+    
+    @font-face {
+    font-family: 'AvenirArabic';
+    src: url({% static "books/fonts/AvenirArabic/AvenirArabic_Medium.eot" %});
+    src: local('Avenir Arabic Medium'), local('AvenirArabic-Medium'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Medium.eot?#iefix" %}) format('embedded-opentype'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Medium.woff2" %}) format('woff2'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Medium.woff" %}) format('woff'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Medium.ttf" %}) format('truetype');
+    font-weight: 500;
+    font-style: normal;}
+    
+    @font-face {
+    font-family: 'AvenirArabic';
+    src: url({% static "books/fonts/AvenirArabic/AvenirArabic_Heavy.eot" %});
+    src: local('Avenir Arabic Heavy'), local('AvenirArabic-Heavy'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Heavy.eot?#iefix" %}) format('embedded-opentype'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Heavy.woff2" %}) format('woff2'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Heavy.woff" %}) format('woff'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Heavy.ttf" %}) format('truetype');
+    font-weight: 700;
+    font-style: normal;}
+    
+    @font-face {
+    font-family: 'AvenirArabic';
+    src: url({% static "books/fonts/AvenirArabic/AvenirArabic_Black.eot" %});
+    src: local('Avenir Arabic Black'), local('AvenirArabic-Black'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Black.eot?#iefix" %}) format('embedded-opentype'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Black.woff2" %}) format('woff2'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Black.woff" %}) format('woff'),
+        url({% static "books/fonts/AvenirArabic/AvenirArabic_Black.ttf" %}) format('truetype');
+    font-weight: 800;
+    font-style: normal;}
+    
+    html {
+      font-family: AvenirArabic;}      
+    body {
+      font-family: AvenirArabic;
+      padding-top: 75px; }
+    ::cue {
+        color:yellow;
+        font-family: AvenirArabic;}      
+  </style>
+  
+  <!-- Bootstrap core CSS -->
+  <link href="{% static "movies/css/bootstrap.min.css" %}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static "movies/css/heroic-features.css" %}" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" href="{% static "fontawesome/css/all.css" %}">
+  
+  
+  {% block style %}
+  {% endblock %}
+  
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  {% block navigation %}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/movies/"><strong>NA<i class="fas fa-angle-double-up"></i>FC<i class="fas fa-asterisk"></i>OLL</strong></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'books:index' %}">Books</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/books/authors/">Authors</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/books/genres/">Topics</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  {% endblock %}
+
+  <!-- Page Content -->
+  <div class="container">
+  {% block page_content %}
+  
+  {% endblock %}
+  </div>
+  
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Nafez Qanadilo 2020</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static "movies/js/jquery-3.4.1.min.js" %}"></script>
+  <script src="{% static "movies/js/bootstrap.bundle.min.js" %}"></script>
+
+
+</body>
+
+</html>

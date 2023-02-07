@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load arabic_numbers %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% block css %}
+<style>
+
+  {% if LANGUAGE_CODE == 'ar' %}
+  
+  ol {list-style-type: arabic-indic; !important}
+  
+  {% endif %}
+  
+</style>
+{% endblock css %}
+
+{% block title %}NafColl Books{% endblock %}
+
+
+  <!-- Navigation -->
+
+  <!-- Page Content -->
+
+  {% block content %}
+  
+  {% if LANGUAGE_CODE == 'ar' %} <!-- start of arabic template -->
+  <div class="container">
+  
+    <div class="row">
+      <div class="col-12 p-3">
+      </div>
+    </div>
+    
+  </div>
+  
+  {% else %}
+  
+  {% endif %}
+  
+  {% endblock %}
